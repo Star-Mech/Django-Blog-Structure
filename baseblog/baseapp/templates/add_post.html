@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Add Blog Post{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<h1>Add Post</h1>
+<br><br>
+<form method="POST", enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.media}}
+    {{form.as_p}}
+    <button class="btn btn-secondary">Post</button>
+</form>
+
+<script>
+    let name = "{{ user.id }}";
+    document.getElementById("Br").value = name;
+</script>
+{% else %}
+<h1>You're not allowed! Turn Back</h1>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>User Profile...</h1>
+{{ cur_user }}
+
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-2">
+            {% if cur_user.profile_pic %}
+            <img src="{{ cur_user.profile_pic.url }}" class="img-fluid rounded-start" alt="..."
+                 style="width:200px;height:200px;object-fit: cover;">
+            {% else %}
+            <img src="{% static 'baseapp/images/default-avatar-profile-icon-social-media-user.jpg' %}" class="img-fluid rounded-start" alt="..."
+                 style="width:200px;height:200px;object-fit: cover;">
+            {% endif %}
+        </div>
+        <div class="col-md-10">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'show_profile_page' cur_user.id %}">{{ cur_user.user.first_name }} {{ cur_user.user.last_name }}</a></h5>
+                <p class="small card-text text-muted">
+                    <a href="{{ cur_user.website_url }}" target=”_blank>Website</a> |
+                    <a href="{{ cur_user.twitter_url }}" target=”_blank>>Twitter</a> |
+                    <a href="{{ cur_user.linkedin_url }}" target=”_blank>>Linkedin</a>
+                </p>
+                <p class="card-text">{{ cur_user.bio }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{ post.title_tag }} {% endblock %}
+{% block content %}
+<h1>{{ post.title }}</h1>
+<small>By: {{ post.author.first_name }} {{ post.author.last_name }} - {{post.pub_date}}-</small>
+{% if user.is_authenticated %}
+
+{% if user.id == post.author.id %}
+<small><a href="{% url 'update-post' post.pk %}">(Edit)</a></small>
+<small><a href="{% url 'delete-post' post.pk %}">(Delete)</a></small><br>
+{% endif %}
+{% endif %}
+
+<hr>
+<br>
+{% if post.header_img %}
+<img src="{{ post.header_img.url }}"><br>
+{{ post.header_img }}<br>
+{{ post.header_img.url }}<br>
+{% endif %}
+{{ post.body|safe }}
+<br>
+<br>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+<br>
+<br>
+<hr>
+<br>
+<form action="{% url 'like_post' post.pk %}" method="post">
+    {% csrf_token %}
+    {% if not liked %}
+    <button type="submit" , name="post_id" , value="{{post.id}}" , class="btn btn-primary btn-sm">Like</button>
+    {% else %}
+    <button type="submit" , name="post_id" , value="{{post.id}}" , class="btn btn-secondary btn-sm">UnLike</button>
+    {% endif %}
+    {{ tot_likes }} Likes
+</form>
+
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-2">
+            {% if post.author.profile.profile_pic %}
+            <img src="{{ post.author.profile.profile_pic.url }}" class="img-fluid rounded-start" alt="..."
+                 style="width:200px;height:200px;object-fit: cover;">
+            {% else %}
+            <img src="{% static 'baseapp/images/default-avatar-profile-icon-social-media-user.jpg' %}"
+                 class="img-fluid rounded-start" alt="..."
+                 style="width:200px;height:200px;object-fit: cover;">
+            {% endif %}
+        </div>
+        <div class="col-md-10">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'show_profile_page' post.author.profile.id %}">
+                    {{ post.author.first_name }} {{ post.author.last_name }}</a></h5>
+                <p class="small card-text text-muted">
+                    <a href="{{ post.author.profile.website_url }}" target=”_blank>Website</a> |
+                    <a href="{{ post.author.profile.twitter_url }}" target=”_blank>>Twitter</a> |
+                    <a href="{{ post.author.profile.linkedin_url }}" target=”_blank>>Linkedin</a>
+                </p>
+                <p class="card-text">{{ post.author.profile.bio }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Body -->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5 col-md-6 col-12 pb-4">
+                <h1>Comments</h1>
+                {% for comment in comments %}
+                <div class="comment mt-4 text-justify float-left">
+                    {% if post.author.profile.profile_pic %}
+                    <img src="{{ post.author.profile.profile_pic.url }}" class="img-fluid rounded-start" alt="..."
+                         style="width:40px;height:40px;object-fit: cover;">
+                    {% else %}
+                    <img src="{% static 'baseapp/images/default-avatar-profile-icon-social-media-user.jpg' %}"
+                         class="img-fluid rounded-start" alt="..."
+                         style="width:200px;height:200px;object-fit: cover;">
+                    {% endif %}
+                    <h4>{{comment.user.username|title}}</h4>
+                    <span>- {{comment.time}}</span>
+                    <br>
+                    {{comment.comment_body|safe}}
+                    <hr>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+                <form id="algin-form">
+                    <div class="form-group">
+                        <h4>Leave a comment</h4>
+                        <label for="message">Comment</label>
+                        <textarea name="msg" id="" msg cols="30" rows="5" class="form-control"
+                                  style=""></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="fullname" disabled value="{{post.author.first_name|title}} {{post.author.last_name|title}}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" disabled value="{{post.author.email}}" class="form-control">
+                    </div>
+                    <div class="form-group" style="padding-top:10px;">
+                        <button type="button" id="post" class="btn btn-secondary">Post Comment</button>
+                    </div>
+                </form>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
