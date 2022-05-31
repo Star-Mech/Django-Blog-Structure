@@ -8,7 +8,12 @@
     <div class="card mb-4" style="max-width: auto;">
         <div class="row g-0">
             <div class="col-md-2">
-                <img src="..." class="img-fluid rounded-start" alt="BLOG IMAGE HERE">
+                {% if post.header_img %}
+                <img src="{{ post.header_img.url }}" class="img-fluid rounded-start" alt="BLOG IMAGE HERE">
+                {% else %}
+                <img src="https://www.salesforce.com/content/dam/blogs/ca/Blog%20Posts/anatomy-of-a-blog-post-open-graph.jpg"
+                     class="img-fluid rounded-start" alt="BLOG IMAGE HERE">
+                {% endif %}
             </div>
             <div class="col-md-10">
                 <div class="card-body">
@@ -17,7 +22,8 @@
                         <small style="padding-left: 10px;">{{ post.author.first_name }}
                             {{ post.author.last_name }}</small>
                         {% if post.author.profile.profile_pic %}
-                        <img src="{{ post.author.profile.profile_pic.url }}" class="img-fluid rounded-start me-5" alt="..."
+                        <img src="{{ post.author.profile.profile_pic.url }}" class="img-fluid rounded-start me-5"
+                             alt="..."
                              style="width:40px;height:40px;object-fit: cover">
                         {% else %}
                         <img src="{% static 'baseapp/images/default-avatar-profile-icon-social-media-user.jpg' %}"
