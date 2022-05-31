@@ -1,3 +1,4 @@
+import django.views
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, UpdateView, DetailView
 from .forms import SignUpForm, EditProfileForm, Password_Change_Form

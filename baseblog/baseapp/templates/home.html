@@ -1,24 +1,46 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <h1>Posts</h1>
 
 <ul>
     {% for post in object_list %}
-    <li><a href="{% url 'article-detail' post.pk %}">{{ post.title }}</a> <a
-            href="{% url 'category' post.category|slugify %}">{{ post.category }}</a> -
-        {{ post.author.first_name }} {{ post.author.last_name }}
+    <div class="card mb-4" style="max-width: auto;">
+        <div class="row g-0">
+            <div class="col-md-2">
+                <img src="..." class="img-fluid rounded-start" alt="BLOG IMAGE HERE">
+            </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'article-detail' post.pk %}">{{ post.title }}</a>
+                        <small style="padding-left: 10px;">{{ post.author.first_name }}
+                            {{ post.author.last_name }}</small>
+                        {% if post.author.profile.profile_pic %}
+                        <img src="{{ post.author.profile.profile_pic.url }}" class="img-fluid rounded-start me-5" alt="..."
+                             style="width:40px;height:40px;object-fit: cover">
+                        {% else %}
+                        <img src="{% static 'baseapp/images/default-avatar-profile-icon-social-media-user.jpg' %}"
+                             class="img-fluid rounded-start" alt="..."
+                             style="width:40px;height:40px;object-fit: cover;">
+                        {% endif %}
+                    </h5>
+                    <p class="card-text">{{ post.snippet|safe}}</p>
+                    <p class="card-text">
+                        <small class="text-muted"><a href="{% url 'category' post.category|slugify %}">
+                            {{ post.category }}</a></small>
+                        {% if user.is_authenticated %}
+                        {% if user.id == post.author.id %}
+                        <small style="padding-left:2%;"><a href="{% url 'update-post' post.pk %}">(Edit)</a></small>
+                        <small><a href="{% url 'delete-post' post.pk %}">(Delete)</a></small>
+                        {% endif %}
+                        {% endif %}
+                    </p>
 
-        {% if user.is_authenticated %}
-        {% if user.id == post.author.id %}
-        <small><a href="{% url 'update-post' post.pk %}">(Edit)</a></small>
-        <small><a href="{% url 'delete-post' post.pk %}">(Delete)</a></small>
-        {% endif %}
-        {% endif %}
-        <br>
-        {{ post.snippet|safe}}
-    </li>
-
+                </div>
+            </div>
+        </div>
+    </div>
     {% endfor %}
 </ul>
 {% endblock %}

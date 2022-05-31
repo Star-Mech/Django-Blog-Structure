@@ -22,20 +22,21 @@
 {{ post.body|safe }}
 <br>
 <br>
-<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+<form action="{% url 'like_post' post.pk %}" method="post">
+    <a href="{% url 'home' %}" class="btn btn-secondary" style="margin-right:8px;">Back</a>
+    {% csrf_token %}
+    {% if not liked %}
+    <button type="submit" name="post_id" value="{{post.id}}" class="btn btn-primary">Like</button>
+    {% else %}
+    <button type="submit" name="post_id" value="{{post.id}}" class="btn btn-secondary btn">UnLike</button>
+    {% endif %}
+    {{ tot_likes }} Likes
+</form>
+
 <br>
 <br>
 <hr>
 <br>
-<form action="{% url 'like_post' post.pk %}" method="post">
-    {% csrf_token %}
-    {% if not liked %}
-    <button type="submit" , name="post_id" , value="{{post.id}}" , class="btn btn-primary btn-sm">Like</button>
-    {% else %}
-    <button type="submit" , name="post_id" , value="{{post.id}}" , class="btn btn-secondary btn-sm">UnLike</button>
-    {% endif %}
-    {{ tot_likes }} Likes
-</form>
 
 <div class="card mb-3">
     <div class="row g-0">
