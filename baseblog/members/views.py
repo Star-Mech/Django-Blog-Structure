@@ -1,16 +1,16 @@
 import django.views
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, UpdateView, DetailView
-from .forms import SignUpForm, EditProfileForm, Password_Change_Form
+from .forms import SignUpForm, EditProfileForm, Password_Change_Form, ProfilePageForm
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 # noinspection PyUnresolvedReferences
 from baseapp.models import Profile
-from .forms import ProfilePageForm
 
 
 # Create your views here.
+
 class CreateProfilePageView(CreateView):
     model = Profile
     form_class = ProfilePageForm
@@ -59,7 +59,7 @@ def PassSuccess(request):
 class UserRegisterView(CreateView):
     form_class = SignUpForm
     template_name = 'registration/register.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('create_profile_page')
 
 
 class UserEditView(UpdateView):

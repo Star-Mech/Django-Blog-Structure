@@ -3,7 +3,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-
+{% if user.is_superuser %}
 <h1>Add Category</h1>
 <br><br>
 <form method="POST">
@@ -13,6 +13,10 @@
 </form>
 {% else %}
 <h1>You're not allowed! Turn Back</h1>
+{% endif %}
+{% else %}
+<h1>You're not Admin! Turn Back</h1>
+
 {% endif %}
 
 {% endblock %}

@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<h1>Posts</h1>
 
 <ul>
+    <h1 class="pb-3">Posts</h1>
     {% for post in object_list %}
     <div class="card mb-4" style="max-width: auto;">
         <div class="row g-0">
             <div class="col-md-2">
                 {% if post.header_img %}
-                <img src="{{ post.header_img.url }}" class="img-fluid rounded-start" alt="BLOG IMAGE HERE">
+                <img src="{{ post.header_img.url }}" style="height:100%; object-fit:cover;" class="img-fluid rounded-start" alt="BLOG IMAGE HERE">
                 {% else %}
                 <img src="https://www.salesforce.com/content/dam/blogs/ca/Blog%20Posts/anatomy-of-a-blog-post-open-graph.jpg"
-                     class="img-fluid rounded-start" alt="BLOG IMAGE HERE">
+                     style="height:100%; object-fit:cover;" class="img-fluid rounded-start" alt="BLOG IMAGE HERE">
                 {% endif %}
             </div>
             <div class="col-md-10">

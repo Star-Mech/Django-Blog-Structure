@@ -15,7 +15,7 @@
 <hr>
 <br>
 {% if post.header_img %}
-<img src="{{ post.header_img.url }}"><br>
+<img src="{{ post.header_img.url }}" style="max-width:100%;"><br>
 {{ post.header_img }}<br>
 {{ post.header_img.url }}<br>
 {% endif %}
@@ -93,7 +93,7 @@
                     <div class="form-group">
                         <h4>Leave a comment</h4>
                         <label for="message">Comment</label>
-                        <textarea name="msg" id="" msg cols="30" rows="5" class="form-control"
+                        <textarea name="msg" msg cols="30" rows="5" class="form-control"
                                   style=""></textarea>
                     </div>
                     <div class="form-group">

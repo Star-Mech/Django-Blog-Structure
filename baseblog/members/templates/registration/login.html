@@ -4,9 +4,21 @@
 {% block content %}
 <h1>Login...</h1>
 <br><br>
-<form method="POST">
+<form method="post">
     {% csrf_token %}
-    {{form.as_p}}
-    <button class="btn btn-secondary">Login</button>
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" name="username" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<div class="mt-2">
+    <a href="{% url 'register' %}" ><small>Not a User? Sign Up!</small></a>
+</div>
+
 {% endblock %}

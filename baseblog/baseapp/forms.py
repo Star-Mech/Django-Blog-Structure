@@ -30,3 +30,14 @@ class EditForm(forms.ModelForm):
             'snippet': forms.Textarea(attrs={'class': 'form-control'}),
 
         }
+
+class AddCategoryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(AddCategoryForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label = ""
+    class Meta:
+        model = Category
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Category Name'}),
+        }
